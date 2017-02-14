@@ -43,9 +43,15 @@ setup(
     tests_require=TESTS_REQUIRE,
     install_requires=[
         'setuptools',
+        'nti.containers',
+        'nti.externalization',
+        'nti.schema',
+        'nti.wref',
+        'persistent',
         'zope.component',
+        'zope.intid',
         'zope.interface',
-        'zope.security',
+        'zope.security'
     ],
     extras_require={
         'test': TESTS_REQUIRE,
