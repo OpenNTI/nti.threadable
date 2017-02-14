@@ -37,6 +37,7 @@ class Threadable(object):
 
     # Our one single parent
     _inReplyTo = None
+
     # Our chain of references back to the root
     _references = ()
 
@@ -59,7 +60,7 @@ class Threadable(object):
 
     def getInReplyTo(self, allow_cached=True):
         """
-        Exposed for those times when we need explicit control 
+        Exposed for those times when we need explicit control
         over caching (when possible)
         """
         if self._inReplyTo is None:
@@ -69,14 +70,17 @@ class Threadable(object):
             return self._inReplyTo(allow_cached=allow_cached)
         except TypeError:  # Not ICachingWeakRef
             return self._inReplyTo()
+    get_in_reply_to = getInReplyTo
 
     def setInReplyTo(self, value):
         self._inReplyTo = IWeakRef(value) if value is not None else None
+    set_in_reply_to = setInReplyTo
 
     inReplyTo = property(getInReplyTo, setInReplyTo)
 
     def isOrWasChildInThread(self):
         return self._inReplyTo is not None or self._references
+    is_or_was_child_in_thread = isOrWasChildInThread
 
     @property
     def references(self):
@@ -94,18 +98,21 @@ class Threadable(object):
 
             if val is not None:
                 yield val
+    get_references = getReferences
 
     def addReference(self, value):
         if value is not None:
             if self._references is Threadable._references:
                 self._references = PersistentList()
             self._references.append(IWeakRef(value))
+    add_reference = addReference
 
     def clearReferences(self):
         try:
             del self._references[:]
         except TypeError:
             pass  # The class tuple
+    clear_references = clearReferences
 
     @property
     def replies(self):
@@ -133,4 +140,4 @@ class Threadable(object):
                                           parent=self,
                                           name='referents')
         return ()
-ThreadableMixin = Threadable # BWC
+ThreadableMixin = Threadable  # BWC
