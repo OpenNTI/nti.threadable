@@ -15,7 +15,7 @@ from zope import interface
 
 from persistent.list import PersistentList
 
-from nti.containers.containers import IntidResolvingIterable
+from nti.containers.datastructures import IntidResolvingIterable
 
 from nti.threadable.interfaces import IInspectableWeakThreadable
 
