@@ -26,22 +26,23 @@ class IThreadable(interface.Interface):
     """
 
     inReplyTo = Object(interface.Interface,
-                       title="""The object to which this object is directly a reply.""",
+                       title=u"The object to which this object is directly a reply.",
                        required=False)
 
-    references = ListOrTuple(title="""A sequence of objects this object transiently references, in order up to the root""",
-                             value_type=Object(interface.Interface, 
-                                               title="A reference"),
-                             default=())
+    references = ListOrTuple(
+                    title=u"A sequence of objects this object transiently references, in order up to the root",
+                    value_type=Object(interface.Interface, title=u"A reference"),
+                    default=())
 
-    replies = UniqueIterable(title="All the direct replies of this object",
-                             description="This property will be automatically maintained.",
-                             value_type=Object(interface.Interface, title="A reply"))
+    replies = UniqueIterable(title=u"All the direct replies of this object",
+                             description=u"This property will be automatically maintained.",
+                             value_type=Object(interface.Interface, title=u"A reply"))
     replies.setTaggedValue('_ext_excluded_out', True)  # Internal use only
 
-    referents = UniqueIterable(title="All the direct and indirect replies to this object",
-                               description="This property will be automatically maintained.",
-                               value_type=Object(interface.Interface, title="A in/direct reply"))
+    referents = UniqueIterable(title=u"All the direct and indirect replies to this object",
+                               description=u"This property will be automatically maintained.",
+                               value_type=Object(interface.Interface, 
+                                                 title=u"A in/direct reply"))
     referents.setTaggedValue('_ext_excluded_out', True)  # Internal use only
 
 
