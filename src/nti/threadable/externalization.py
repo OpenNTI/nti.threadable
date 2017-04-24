@@ -39,8 +39,7 @@ class ThreadableExternalizableMixin(object):
     _ext_write_missing_references = True
 
     def toExternalObject(self, mergeFrom=None, **kwargs):
-        extDict = super(ThreadableExternalizableMixin, 
-                        self).toExternalObject(mergeFrom=mergeFrom, **kwargs)
+        extDict = super(ThreadableExternalizableMixin, self).toExternalObject(mergeFrom=mergeFrom, **kwargs)
         if self._ext_can_write_threads():
             assert isinstance(extDict, collections.Mapping)
             context = self._ext_replacement()
@@ -77,9 +76,7 @@ class ThreadableExternalizableMixin(object):
         assert isinstance(parsed, collections.Mapping)
         inReplyTo = parsed.pop('inReplyTo', None)
         references = parsed.pop('references', ())
-        super(ThreadableExternalizableMixin, 
-              self).updateFromExternalObject(parsed, **kwargs)
-
+        super(ThreadableExternalizableMixin, self).updateFromExternalObject(parsed, **kwargs)
         if self._ext_can_update_threads():
             context = self._ext_replacement()
             context.inReplyTo = inReplyTo
