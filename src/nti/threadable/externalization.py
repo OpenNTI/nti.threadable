@@ -4,7 +4,7 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -43,8 +43,7 @@ class ThreadableExternalizableMixin(object):
         if self._ext_can_write_threads():
             assert isinstance(extDict, collections.Mapping)
             context = self._ext_replacement()
-            extDict['inReplyTo'] = self._ext_ref(context.inReplyTo,
-                                                 context._inReplyTo)
+            extDict['inReplyTo'] = self._ext_ref(context.inReplyTo, context._inReplyTo)
             extDict['references'] = [
                 self._ext_ref(ref(), ref) for ref in context._references
             ]

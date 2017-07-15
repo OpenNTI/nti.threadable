@@ -4,12 +4,11 @@ from setuptools import setup, find_packages
 entry_points = {
 }
 
+
 TESTS_REQUIRE = [
-    'fudge',
-    'nose2[coverage_plugin]',
+    'pyhamcrest'
     'nti.testing',
-    'pyhamcrest',
-    'z3c.baseregistry',
+    'zope.testing',
     'zope.testrunner',
 ]
 
@@ -18,13 +17,14 @@ def _read(fname):
     with codecs.open(fname, encoding='utf-8') as f:
         return f.read()
 
+
 setup(
     name='nti.threadable',
     version=_read('version.txt').strip(),
     author='Jason Madden',
     author_email='jason@nextthought.com',
     description="NTI Threadable",
-    long_description=_read('README.rst'),
+    long_description=(_read('README.rst') + '\n\n' + _read("CHANGES.rst")),
     license='Apache',
     keywords='threadable',
     classifiers=[
