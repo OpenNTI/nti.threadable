@@ -17,7 +17,7 @@ from zope.intid.interfaces import IIntIdRemovedEvent
 
 from nti.threadable.interfaces import IThreadable
 
-from nti.threadable.threadable import ThreadableMixin
+from nti.threadable.threadable import Threadable as ThreadableMixin
 
 
 def discard(the_set, the_value):
@@ -31,7 +31,7 @@ def discard(the_set, the_value):
 
 
 @component.adapter(IThreadable, IIntIdAddedEvent)
-def threadable_added(threadable, event):
+def threadable_added(threadable, _):
     """
     Update the replies and referents. NOTE: This assumes that IThreadable is actually
     a ThreadableMixin.
@@ -69,7 +69,7 @@ def _threadable_added(threadable, intids, intid):
 
 
 @component.adapter(IThreadable, IIntIdRemovedEvent)
-def threadable_removed(threadable, event):
+def threadable_removed(threadable, _):
     """
     Update the replies and referents. NOTE: This assumes that IThreadable 
     is actually a ThreadableMixin.
