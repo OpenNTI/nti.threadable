@@ -11,7 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import collections
 
-from nti.externalization.oids import to_external_ntiid_oid
+from nti.ntiids.oids import to_external_ntiid_oid
 
 from nti.wref.interfaces import IWeakRefToMissing
 
