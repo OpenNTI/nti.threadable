@@ -63,7 +63,6 @@ class ThreadableExternalizableMixin(object):
                 __traceback_info__ = self, obj, ref
                 raise ValueError("Unable to create external reference", obj)
             return result
-
         # No object. Did we have a reference at one time?
         if ref is not None and self._ext_write_missing_references:
             # Yes. Can we write something out?
