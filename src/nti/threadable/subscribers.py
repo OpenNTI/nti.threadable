@@ -31,6 +31,27 @@ def discard(the_set, the_value):
             pass
 
 
+def _do_threadable_added(threadable, intids, doc_id):
+    # This function is for migration support
+    inReplyTo = threadable.inReplyTo
+    if not IThreadable.providedBy(inReplyTo):
+        return  # nothing to do
+
+    # Only the direct parent gets added as a reply
+    if inReplyTo._replies is ThreadableMixin._replies:
+        inReplyTo._replies = intids.family.II.TreeSet()
+    inReplyTo._replies.add(doc_id)
+
+    # Now walk up the tree and record the indirect reference (including in the direct
+    # parent)
+    while IThreadable.providedBy(inReplyTo):
+        if inReplyTo._referents is ThreadableMixin._referents:
+            inReplyTo._referents = intids.family.II.TreeSet()
+        inReplyTo._referents.add(doc_id)
+        inReplyTo = inReplyTo.inReplyTo
+_threadable_added = _do_threadable_added # BWC
+
+
 @component.adapter(IThreadable, IIntIdAddedEvent)
 def threadable_added(threadable, _):
     """
@@ -45,28 +66,8 @@ def threadable_added(threadable, _):
         return  # nothing to do
 
     intids = component.getUtility(IIntIds)
-    intid = intids.getId(threadable)
-    _threadable_added(threadable, intids, intid)
-
-
-def _threadable_added(threadable, intids, intid):
-    # This function is for migration support
-    inReplyTo = threadable.inReplyTo
-    if not IThreadable.providedBy(inReplyTo):
-        return  # nothing to do
-
-    # Only the direct parent gets added as a reply
-    if inReplyTo._replies is ThreadableMixin._replies:
-        inReplyTo._replies = intids.family.II.TreeSet()
-    inReplyTo._replies.add(intid)
-
-    # Now walk up the tree and record the indirect reference (including in the direct
-    # parent)
-    while IThreadable.providedBy(inReplyTo):
-        if inReplyTo._referents is ThreadableMixin._referents:
-            inReplyTo._referents = intids.family.II.TreeSet()
-        inReplyTo._referents.add(intid)
-        inReplyTo = inReplyTo.inReplyTo
+    doc_id = intids.getId(threadable)
+    _do_threadable_added(threadable, intids, doc_id)
 
 
 @component.adapter(IThreadable, IIntIdRemovedEvent)
