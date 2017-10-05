@@ -19,31 +19,9 @@ from hamcrest import has_property
 import fudge
 import unittest
 
-from zope import interface
-
-from persistent import Persistent
-
-from nti.externalization.datastructures import InterfaceObjectIO
-
-from nti.threadable.threadable import Threadable
-
-from nti.threadable.externalization import ThreadableExternalizableMixin
-
+from nti.threadable.tests import PThreadable
+from nti.threadable.tests import PInternalObjectIO
 from nti.threadable.tests import SharedConfiguringTestLayer
-
-
-class IP(interface.Interface):
-    pass
-
-
-@interface.implementer(IP)
-class P(Persistent, Threadable):
-    pass
-
-
-class PInternalObjectIO(ThreadableExternalizableMixin,
-                        InterfaceObjectIO):
-    _ext_iface_upper_bound = IP
 
 
 class TestExternalization(unittest.TestCase):
@@ -52,8 +30,8 @@ class TestExternalization(unittest.TestCase):
 
     @fudge.patch('nti.threadable.externalization.to_external_ntiid_oid')
     def test_export(self, mock_oid):
-        inReplyTo = P()
-        context = P()
+        inReplyTo = PThreadable()
+        context = PThreadable()
         context.inReplyTo = inReplyTo
         pio = PInternalObjectIO(context)
         # no oid
@@ -65,7 +43,7 @@ class TestExternalization(unittest.TestCase):
                     has_entry('inReplyTo', is_not(none())))
 
         # don't write missing references
-        context = P()
+        context = PThreadable()
 
         class NoneRef(object):
             def __conform__(self, unused):
@@ -101,12 +79,12 @@ class TestExternalization(unittest.TestCase):
                     has_entry('inReplyTo', 'missing'))
 
     def test_import(self):
-        context = P()
+        context = PThreadable()
         assert_that(context, has_property('inReplyTo', is_(none())))
         assert_that(context, has_property('references', is_(())))
 
         pio = PInternalObjectIO(context)
-        pio.updateFromExternalObject({'inReplyTo':  P(),
-                                      'references': [P()]})
+        pio.updateFromExternalObject({'inReplyTo':  PThreadable(),
+                                      'references': [PThreadable()]})
         assert_that(context, has_property('inReplyTo', is_not(none())))
         assert_that(context, has_property('references', has_length(1)))

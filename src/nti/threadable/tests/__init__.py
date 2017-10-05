@@ -43,3 +43,28 @@ class SharedConfiguringTestLayer(GCLayerMixin,
 
 class ThreadableLayerTest(unittest.TestCase):
     layer = SharedConfiguringTestLayer
+
+
+from zope import interface
+
+from persistent import Persistent
+
+from nti.externalization.datastructures import InterfaceObjectIO
+
+from nti.threadable.threadable import Threadable
+
+from nti.threadable.externalization import ThreadableExternalizableMixin
+
+
+class IPThreadable(interface.Interface):
+    pass
+
+
+@interface.implementer(IPThreadable)
+class PThreadable(Persistent, Threadable):
+    pass
+
+
+class PInternalObjectIO(ThreadableExternalizableMixin,
+                        InterfaceObjectIO):
+    _ext_iface_upper_bound = IPThreadable
