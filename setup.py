@@ -6,9 +6,8 @@ entry_points = {
 
 
 TESTS_REQUIRE = [
-    'pyhamcrest'
     'nti.testing',
-    'zope.testing',
+    'zope.dottedname',
     'zope.testrunner',
 ]
 
@@ -27,14 +26,18 @@ setup(
     long_description=(_read('README.rst') + '\n\n' + _read("CHANGES.rst")),
     license='Apache',
     keywords='threadable',
-    classifiers=[
+      classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: Implementation :: CPython'
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
     ],
+    url="https://github.com/NextThought/nti.threadable",
     zip_safe=True,
     packages=find_packages('src'),
     package_dir={'': 'src'},
@@ -44,6 +47,7 @@ setup(
     install_requires=[
         'setuptools',
         'nti.containers',
+        'nti.ntiids',
         'nti.externalization',
         'nti.schema',
         'nti.wref',
@@ -55,6 +59,11 @@ setup(
     ],
     extras_require={
         'test': TESTS_REQUIRE,
+        'docs': [
+            'Sphinx',
+            'repoze.sphinx.autointerface',
+            'sphinx_rtd_theme',
+        ],
     },
     entry_points=entry_points,
 )

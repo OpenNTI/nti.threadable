@@ -8,6 +8,9 @@
 	<include package="zope.component" />
 	<include package="zope.security" />
 
+	<include package="nti.wref" />
+	<include package="nti.externalization" />
+
 	<!-- Subscribers -->	
 	<!-- Events for keeping replies and referents updated. -->
 	<subscriber handler=".subscribers.threadable_added" />
