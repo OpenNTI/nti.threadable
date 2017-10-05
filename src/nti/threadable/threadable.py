@@ -80,7 +80,7 @@ class Threadable(object):
     inReplyTo = property(getInReplyTo, setInReplyTo)
 
     def isOrWasChildInThread(self):
-        return self._inReplyTo is not None or self._references
+        return bool(self._inReplyTo is not None or self._references)
     is_or_was_child_in_thread = isOrWasChildInThread
 
     @property
