@@ -6,6 +6,7 @@ entry_points = {
 
 
 TESTS_REQUIRE = [
+    'fudge',
     'nti.testing',
     'zope.dottedname',
     'zope.testrunner',
@@ -23,10 +24,14 @@ setup(
     author='Jason Madden',
     author_email='jason@nextthought.com',
     description="NTI Threadable",
-    long_description=(_read('README.rst') + '\n\n' + _read("CHANGES.rst")),
+    long_description=(
+        _read('README.rst')
+        + '\n\n'
+        + _read("CHANGES.rst")
+    ),
     license='Apache',
     keywords='threadable',
-      classifiers=[
+    classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Operating System :: OS Independent',
@@ -55,7 +60,7 @@ setup(
         'zope.component',
         'zope.intid',
         'zope.interface',
-        'zope.security'
+        'zope.security',
     ],
     extras_require={
         'test': TESTS_REQUIRE,
