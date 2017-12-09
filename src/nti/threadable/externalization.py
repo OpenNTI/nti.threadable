@@ -44,6 +44,7 @@ class ThreadableExternalizableMixin(object):
         if self._ext_can_write_threads():
             assert isinstance(extDict, collections.Mapping)
             context = self._ext_replacement()
+            # pylint: disable=protected-access
             extDict['inReplyTo'] = self._ext_ref(context.inReplyTo, context._inReplyTo)
             extDict['references'] = [
                 self._ext_ref(ref(), ref) for ref in context._references
@@ -60,6 +61,7 @@ class ThreadableExternalizableMixin(object):
         if obj is not None:
             result = to_external_ntiid_oid(obj)
             if not result:
+                # pylint: disable=unused-variable
                 __traceback_info__ = self, obj, ref
                 raise ValueError("Unable to create external reference", obj)
             return result
@@ -68,6 +70,7 @@ class ThreadableExternalizableMixin(object):
             # Yes. Can we write something out?
             missing_ref = IWeakRefToMissing(ref, None)
             if missing_ref is not None:
+                # pylint: disable=too-many-function-args
                 return missing_ref.make_missing_ntiid() 
             return None
 

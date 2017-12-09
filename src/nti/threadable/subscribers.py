@@ -37,6 +37,7 @@ def _do_threadable_added(threadable, intids, doc_id):
     if not IThreadable.providedBy(inReplyTo):
         return  # nothing to do
 
+    # pylint: disable=protected-access
     # Only the direct parent gets added as a reply
     if inReplyTo._replies is ThreadableMixin._replies:
         inReplyTo._replies = intids.family.II.TreeSet()
@@ -84,7 +85,7 @@ def threadable_removed(threadable, _):
 
     intids = component.getUtility(IIntIds)
     intid = intids.getId(threadable)
-
+    # pylint: disable=protected-access
     # Only the direct parent gets added as a reply
     try:
         discard(inReplyTo._replies, intid)

@@ -56,7 +56,7 @@ class Threadable(object):
     # Our direct or indirect replies
     _referents = ()
 
-    def __init__(self):
+    def __init__(self):  # pylint: disable=useless-super-delegation
         super(Threadable, self).__init__()
 
     def getInReplyTo(self, allow_cached=True):
