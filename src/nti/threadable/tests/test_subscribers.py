@@ -77,7 +77,6 @@ class TestSubscribers(unittest.TestCase):
                     has_property('_referents', has_length(1)))
 
         # removed
-        # from IPython.terminal.debugger import set_trace;set_trace()
         threadable_removed(context, None)
 
         # coverage
